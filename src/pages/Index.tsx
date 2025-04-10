@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from 'react';
 import BitcoinLogo from '@/components/BitcoinLogo';
 import PriceDisplay from '@/components/PriceDisplay';
@@ -6,6 +7,9 @@ import SentimentAnalysis from '@/components/SentimentAnalysis';
 import PredictionConfidence from '@/components/PredictionConfidence';
 import TrendAlerts from '@/components/TrendAlerts';
 import NewsFeed from '@/components/NewsFeed';
+import PriceAlert from '@/components/PriceAlert';
+import FuturePrediction from '@/components/FuturePrediction';
+import PriceComparison from '@/components/PriceComparison';
 import { 
   fetchBitcoinPrice, 
   fetchHistoricalPriceData,
@@ -136,10 +140,29 @@ const Index = () => {
           </div>
           
           <div>
+            <PriceComparison
+              historicalData={historicalData}
+              predictedData={predictedData}
+              isLoading={isLoadingChart}
+            />
+          </div>
+          
+          <div>
+            <FuturePrediction
+              predictedData={predictedData}
+              isLoading={isLoadingChart}
+            />
+          </div>
+          
+          <div>
             <PredictionConfidence 
               confidence={predictionConfidence}
               isLoading={isLoadingConfidence}
             />
+          </div>
+          
+          <div>
+            <PriceAlert />
           </div>
           
           <div>

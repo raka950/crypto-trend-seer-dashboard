@@ -67,7 +67,11 @@ const PriceChart: React.FC<PriceChartProps> = ({ data, predictedData = [], isLoa
   const filteredData = getTimeframeData();
   
   // Combine historical and prediction data
-  const combinedData: ChartDataPoint[] = [...filteredData];
+  const combinedData: ChartDataPoint[] = [...filteredData.map(item => ({
+    date: item.date,
+    price: item.price
+  }))];
+  
   if (predictedData && predictedData.length > 0) {
     predictedData.forEach(item => {
       const existingIndex = combinedData.findIndex(d => d.date === item.date);
