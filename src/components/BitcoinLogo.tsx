@@ -6,6 +6,8 @@ const BitcoinLogo: React.FC = () => {
   const mountRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    if (!mountRef.current) return;
+    
     // Scene setup
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 1000);
@@ -13,9 +15,10 @@ const BitcoinLogo: React.FC = () => {
 
     // Renderer setup
     const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
-    renderer.setSize(200, 200);
+    renderer.setSize(80, 80);
     renderer.setClearColor(0x000000, 0);
     
+    // Clear any existing content
     if (mountRef.current) {
       mountRef.current.innerHTML = '';
       mountRef.current.appendChild(renderer.domElement);
@@ -34,7 +37,6 @@ const BitcoinLogo: React.FC = () => {
     scene.add(coin);
 
     // Add Bitcoin symbol
-    const loader = new THREE.TextureLoader();
     const bitcoinTexture = new THREE.MeshStandardMaterial({
       color: 0xF7931A,
       metalness: 0.8,
@@ -92,25 +94,23 @@ const BitcoinLogo: React.FC = () => {
       renderer.render(scene, camera);
     };
 
-    animate();
-
-    // Handle resizing
-    const handleResize = () => {
-      renderer.setSize(200, 200);
-      camera.updateProjectionMatrix();
-    };
-
-    window.addEventListener('resize', handleResize);
+    let animationId = requestAnimationFrame(animate);
 
     return () => {
-      window.removeEventListener('resize', handleResize);
-      if (mountRef.current) {
+      cancelAnimationFrame(animationId);
+      if (mountRef.current && mountRef.current.contains(renderer.domElement)) {
         mountRef.current.removeChild(renderer.domElement);
       }
+      // Dispose THREE.js resources
+      geometry.dispose();
+      material.dispose();
+      symbolGeometry.dispose();
+      bitcoinTexture.dispose();
+      renderer.dispose();
     };
   }, []);
 
-  return <div ref={mountRef} className="w-[200px] h-[200px] coin-shadow" />;
+  return <div ref={mountRef} className="w-[80px] h-[80px] coin-shadow" />;
 };
 
 export default BitcoinLogo;

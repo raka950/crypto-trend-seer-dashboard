@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from 'react';
 import BitcoinLogo from '@/components/BitcoinLogo';
 import PriceDisplay from '@/components/PriceDisplay';
@@ -72,7 +73,7 @@ const Index = () => {
         console.error('Error fetching initial data:', error);
         toast({
           title: "Error",
-          description: "Failed to load data. Please refresh the page.",
+          description: "Failed to load some data. Using fallback values.",
           variant: "destructive"
         });
       }
@@ -93,7 +94,7 @@ const Index = () => {
     return () => {
       clearInterval(priceInterval);
     };
-  }, [toast]);
+  }, [toast, bitcoinPrice]);
 
   return (
     <div className="min-h-screen py-6 px-4 sm:px-6">
@@ -101,10 +102,10 @@ const Index = () => {
         <header className="mb-8">
           <div className="glass-card p-6 flex flex-col md:flex-row items-center justify-between">
             <div className="flex items-center mb-6 md:mb-0">
-              <div className="block">
+              <div className="flex-shrink-0 mr-2 md:mr-4">
                 <BitcoinLogo />
               </div>
-              <div className="sm:ml-8">
+              <div className="ml-2 md:ml-8">
                 <PriceDisplay 
                   price={bitcoinPrice} 
                   previousPrice={previousPrice}
