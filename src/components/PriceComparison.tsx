@@ -1,7 +1,6 @@
-
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { ChartLineUp } from 'lucide-react';
+import { BarChart as BarChartIcon } from 'lucide-react';
 import { 
   BarChart, 
   Bar, 
@@ -25,7 +24,6 @@ const PriceComparison: React.FC<PriceComparisonProps> = ({
   predictedData, 
   isLoading 
 }) => {
-  // Get only the last 5 days of data
   const getLastFiveDaysData = () => {
     if (historicalData.length === 0 || predictedData.length === 0) return [];
     
@@ -36,7 +34,6 @@ const PriceComparison: React.FC<PriceComparisonProps> = ({
       .filter(item => new Date(item.date) >= fiveDaysAgo)
       .slice(-5);
       
-    // Find matching predicted data points
     return last5DaysData.map(actual => {
       const matchingPrediction = predictedData.find(
         pred => new Date(pred.date).toDateString() === new Date(actual.date).toDateString()
@@ -89,7 +86,7 @@ const PriceComparison: React.FC<PriceComparisonProps> = ({
     <Card className="glass-card h-full">
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
-          <ChartLineUp className="h-5 w-5 text-btc-gold" />
+          <BarChartIcon className="h-5 w-5 text-btc-gold" />
           Prediction Accuracy (Last 5 Days)
         </CardTitle>
       </CardHeader>
