@@ -9,6 +9,12 @@ interface PriceChartProps {
   isLoading: boolean;
 }
 
+interface ChartDataPoint {
+  date: string;
+  price?: number;
+  predictedPrice?: number;
+}
+
 const PriceChart: React.FC<PriceChartProps> = ({ data, predictedData = [], isLoading }) => {
   const [timeframe, setTimeframe] = useState<'24h' | '7d' | '30d' | '1y'>('7d');
   
@@ -61,7 +67,7 @@ const PriceChart: React.FC<PriceChartProps> = ({ data, predictedData = [], isLoa
   const filteredData = getTimeframeData();
   
   // Combine historical and prediction data
-  const combinedData = [...filteredData];
+  const combinedData: ChartDataPoint[] = [...filteredData];
   if (predictedData && predictedData.length > 0) {
     predictedData.forEach(item => {
       const existingIndex = combinedData.findIndex(d => d.date === item.date);
@@ -73,7 +79,6 @@ const PriceChart: React.FC<PriceChartProps> = ({ data, predictedData = [], isLoa
       } else {
         combinedData.push({ 
           date: item.date, 
-          price: undefined, 
           predictedPrice: item.price 
         });
       }

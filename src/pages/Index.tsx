@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import BitcoinLogo from '@/components/BitcoinLogo';
 import PriceDisplay from '@/components/PriceDisplay';
@@ -17,7 +16,7 @@ import {
   fetchPredictedPrices
 } from '@/services/api';
 import { useToast } from '@/hooks/use-toast';
-import { bitcoin } from 'lucide-react';
+import { Bitcoin } from 'lucide-react';
 
 const Index = () => {
   const { toast } = useToast();
@@ -37,40 +36,32 @@ const Index = () => {
   const [isLoadingAlerts, setIsLoadingAlerts] = useState(true);
 
   useEffect(() => {
-    // Initial data loading
     const fetchInitialData = async () => {
       try {
-        // Fetch current price
         const price = await fetchBitcoinPrice();
         setBitcoinPrice(price);
         setPreviousPrice(0);
         setIsLoadingPrice(false);
         
-        // Fetch historical data
         const historical = await fetchHistoricalPriceData(30);
         setHistoricalData(historical);
         
-        // Fetch predicted data
         const predicted = await fetchPredictedPrices();
         setPredictedData(predicted);
         setIsLoadingChart(false);
         
-        // Fetch news
         const news = await fetchBitcoinNews();
         setNewsItems(news);
         setIsLoadingNews(false);
         
-        // Fetch sentiment
         const sentiment = await fetchSentimentData();
         setSentimentData(sentiment);
         setIsLoadingSentiment(false);
         
-        // Fetch confidence
         const confidence = await fetchPredictionConfidence();
         setPredictionConfidence(confidence);
         setIsLoadingConfidence(false);
         
-        // Fetch alerts
         const alerts = await fetchTrendAlerts();
         setTrendAlerts(alerts);
         setIsLoadingAlerts(false);
@@ -87,7 +78,6 @@ const Index = () => {
     
     fetchInitialData();
     
-    // Set up interval for price updates
     const priceInterval = setInterval(async () => {
       try {
         const newPrice = await fetchBitcoinPrice();
@@ -96,7 +86,7 @@ const Index = () => {
       } catch (error) {
         console.error('Error updating price:', error);
       }
-    }, 30000); // Update every 30 seconds
+    }, 30000);
     
     return () => {
       clearInterval(priceInterval);
@@ -106,7 +96,6 @@ const Index = () => {
   return (
     <div className="min-h-screen py-6 px-4 sm:px-6">
       <div className="max-w-7xl mx-auto">
-        {/* Header */}
         <header className="mb-8">
           <div className="glass-card p-6 flex flex-col md:flex-row items-center justify-between">
             <div className="flex items-center mb-6 md:mb-0">
@@ -130,9 +119,7 @@ const Index = () => {
           </div>
         </header>
         
-        {/* Main Content Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {/* Historical Price Chart */}
           <div>
             <PriceChart 
               data={historicalData}
@@ -141,7 +128,6 @@ const Index = () => {
             />
           </div>
           
-          {/* Sentiment Analysis */}
           <div>
             <SentimentAnalysis 
               sentiment={sentimentData}
@@ -149,7 +135,6 @@ const Index = () => {
             />
           </div>
           
-          {/* Prediction Confidence */}
           <div>
             <PredictionConfidence 
               confidence={predictionConfidence}
@@ -157,7 +142,6 @@ const Index = () => {
             />
           </div>
           
-          {/* Trend Alerts */}
           <div>
             <TrendAlerts 
               alerts={trendAlerts}
@@ -166,7 +150,6 @@ const Index = () => {
           </div>
         </div>
         
-        {/* News Feed */}
         <div className="mt-6">
           <NewsFeed 
             news={newsItems}
@@ -174,7 +157,6 @@ const Index = () => {
           />
         </div>
         
-        {/* Footer */}
         <footer className="mt-8 text-center text-gray-500 text-sm">
           <p>Data provided by CoinGecko API. Predictions are for demonstration purposes only.</p>
           <p className="mt-1">© 2025 CryptoTrendSeer. Not financial advice.</p>
