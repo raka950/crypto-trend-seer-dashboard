@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import BitcoinLogo from '@/components/BitcoinLogo';
 import PriceDisplay from '@/components/PriceDisplay';
@@ -114,9 +113,8 @@ const Index = () => {
               </div>
             </div>
             <div className="text-right">
-              <p className="text-gray-400 mb-1">Powered by</p>
               <h3 className="font-bold text-xl bg-gradient-to-r from-btc-gold to-btc-lightGold text-transparent bg-clip-text">
-                CryptoTrendSeer
+                Bitcoin Tracker
               </h3>
             </div>
           </div>
@@ -181,7 +179,7 @@ const Index = () => {
         
         <footer className="mt-8 text-center text-gray-500 text-sm">
           <p>Data provided by CoinGecko API. Predictions are for demonstration purposes only.</p>
-          <p className="mt-1">© 2025 CryptoTrendSeer. Not financial advice.</p>
+          <p className="mt-1">© 2025 Bitcoin Tracker. Not financial advice.</p>
         </footer>
       </div>
     </div>
