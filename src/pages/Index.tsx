@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from 'react';
 import BitcoinLogo from '@/components/BitcoinLogo';
 import PriceDisplay from '@/components/PriceDisplay';
@@ -20,7 +19,6 @@ import {
   fetchPredictedPrices
 } from '@/services/api';
 import { useToast } from '@/hooks/use-toast';
-import { Bitcoin } from 'lucide-react';
 
 const Index = () => {
   const { toast } = useToast();
@@ -103,7 +101,7 @@ const Index = () => {
         <header className="mb-8">
           <div className="glass-card p-6 flex flex-col md:flex-row items-center justify-between">
             <div className="flex items-center mb-6 md:mb-0">
-              <div className="hidden sm:block">
+              <div className="block">
                 <BitcoinLogo />
               </div>
               <div className="sm:ml-8">

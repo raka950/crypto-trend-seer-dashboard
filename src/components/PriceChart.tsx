@@ -89,6 +89,29 @@ const PriceChart: React.FC<PriceChartProps> = ({ data, predictedData = [], isLoa
     });
   }
 
+  // Calculate min and max for Y axis to make it closer to current price
+  const calculateYAxisDomain = () => {
+    if (combinedData.length === 0) return ['dataMin', 'dataMax'];
+    
+    // Get all price values (actual and predicted)
+    const allPrices = combinedData.flatMap(item => [
+      item.price !== undefined ? item.price : null,
+      item.predictedPrice !== undefined ? item.predictedPrice : null
+    ]).filter(price => price !== null) as number[];
+    
+    if (allPrices.length === 0) return ['dataMin', 'dataMax'];
+    
+    const min = Math.min(...allPrices);
+    const max = Math.max(...allPrices);
+    const range = max - min;
+    
+    // Create a tighter range around the actual prices (10% padding)
+    const padding = range * 0.1;
+    return [Math.max(0, min - padding), max + padding];
+  };
+
+  const yAxisDomain = calculateYAxisDomain();
+
   return (
     <Card className="glass-card h-full">
       <CardHeader className="pb-2">
@@ -144,7 +167,7 @@ const PriceChart: React.FC<PriceChartProps> = ({ data, predictedData = [], isLoa
                 }}
               />
               <YAxis 
-                domain={['dataMin - 1000', 'dataMax + 1000']}
+                domain={yAxisDomain}
                 tick={{ fill: '#9CA3AF' }}
                 tickFormatter={(value) => `$${value.toLocaleString()}`}
               />
