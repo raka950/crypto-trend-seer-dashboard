@@ -5,12 +5,11 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { useToast } from '@/hooks/use-toast';
 import { Bell, BellOff, BellRing } from 'lucide-react';
-import { Progress } from '@/components/ui/progress';
 
 const PriceAlert = () => {
   const { toast } = useToast();
-  const [upperThreshold, setUpperThreshold] = useState<string>('');
-  const [lowerThreshold, setLowerThreshold] = useState<string>('');
+  const [aboveThreshold, setAboveThreshold] = useState<string>('');
+  const [belowThreshold, setBelowThreshold] = useState<string>('');
   const [alertsActive, setAlertsActive] = useState<boolean>(false);
   const [notificationsPermission, setNotificationsPermission] = useState<string>(
     Notification.permission
@@ -37,10 +36,10 @@ const PriceAlert = () => {
   };
 
   const handleSetAlerts = () => {
-    if (!upperThreshold && !lowerThreshold) {
+    if (!aboveThreshold && !belowThreshold) {
       toast({
         title: "Error",
-        description: "Please set at least one threshold value",
+        description: "Please set at least one price alert threshold",
         variant: "destructive",
       });
       return;
@@ -56,7 +55,7 @@ const PriceAlert = () => {
     if (!alertsActive) {
       toast({
         title: "Alerts activated",
-        description: `You will be notified when BTC price ${upperThreshold ? `exceeds $${upperThreshold}` : ''}${upperThreshold && lowerThreshold ? ' or ' : ''}${lowerThreshold ? `falls below $${lowerThreshold}` : ''}`,
+        description: `You will be notified when BTC price ${aboveThreshold ? `exceeds $${aboveThreshold}` : ''}${aboveThreshold && belowThreshold ? ' or ' : ''}${belowThreshold ? `falls below $${belowThreshold}` : ''}`,
       });
     } else {
       toast({
@@ -97,23 +96,23 @@ const PriceAlert = () => {
       <CardContent>
         <div className="space-y-4">
           <div>
-            <label className="text-sm text-gray-400 block mb-1">Upper threshold ($)</label>
+            <label className="text-sm text-gray-400 block mb-1">Price Alert Above ($)</label>
             <Input
               type="number"
               placeholder="e.g. 85000"
-              value={upperThreshold}
-              onChange={(e) => setUpperThreshold(e.target.value)}
+              value={aboveThreshold}
+              onChange={(e) => setAboveThreshold(e.target.value)}
               className="bg-btc-navy/50 border-gray-700"
               disabled={alertsActive}
             />
           </div>
           <div>
-            <label className="text-sm text-gray-400 block mb-1">Lower threshold ($)</label>
+            <label className="text-sm text-gray-400 block mb-1">Price Alert Below ($)</label>
             <Input
               type="number"
               placeholder="e.g. 75000"
-              value={lowerThreshold}
-              onChange={(e) => setLowerThreshold(e.target.value)}
+              value={belowThreshold}
+              onChange={(e) => setBelowThreshold(e.target.value)}
               className="bg-btc-navy/50 border-gray-700"
               disabled={alertsActive}
             />
@@ -156,3 +155,4 @@ const PriceAlert = () => {
 };
 
 export default PriceAlert;
+
