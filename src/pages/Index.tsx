@@ -9,6 +9,7 @@ import NewsFeed from '@/components/NewsFeed';
 import PriceAlert from '@/components/PriceAlert';
 import FuturePrediction from '@/components/FuturePrediction';
 import PriceComparison from '@/components/PriceComparison';
+import TimeframePrediction from '@/components/TimeframePrediction';
 import { 
   fetchBitcoinPrice, 
   fetchHistoricalPriceData,
@@ -145,8 +146,37 @@ const Index = () => {
           </div>
           
           <div>
-            <FuturePrediction
+            <TimeframePrediction
               predictedData={predictedData}
+              currentPrice={bitcoinPrice}
+              timeframe="24h"
+              isLoading={isLoadingChart}
+            />
+          </div>
+
+          <div>
+            <TimeframePrediction
+              predictedData={predictedData}
+              currentPrice={bitcoinPrice}
+              timeframe="7d"
+              isLoading={isLoadingChart}
+            />
+          </div>
+
+          <div>
+            <TimeframePrediction
+              predictedData={predictedData}
+              currentPrice={bitcoinPrice}
+              timeframe="30d"
+              isLoading={isLoadingChart}
+            />
+          </div>
+
+          <div>
+            <TimeframePrediction
+              predictedData={predictedData}
+              currentPrice={bitcoinPrice}
+              timeframe="1y"
               isLoading={isLoadingChart}
             />
           </div>
