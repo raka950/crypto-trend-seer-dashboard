@@ -1,7 +1,14 @@
 import React, { useState } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { ChartLine } from 'lucide-react';
+import { ChartLine, Clock } from 'lucide-react';
+import { 
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 interface PriceChartProps {
   data: Array<{ date: string; price: number }>;
@@ -106,6 +113,13 @@ const PriceChart: React.FC<PriceChartProps> = ({ data, predictedData = [], isLoa
 
   const yAxisDomain = calculateYAxisDomain();
 
+  const timeframeOptions = [
+    { value: '24h', label: 'Last 24 Hours' },
+    { value: '7d', label: 'Last 7 Days' },
+    { value: '30d', label: 'Last 30 Days' },
+    { value: '1y', label: 'Last 12 Months' }
+  ];
+
   return (
     <Card className="glass-card h-full">
       <CardHeader className="pb-2">
@@ -127,20 +141,25 @@ const PriceChart: React.FC<PriceChartProps> = ({ data, predictedData = [], isLoa
                 <span className="text-btc-positive text-sm">AI Prediction</span>
               </div>
             </div>
-            <div className="flex space-x-1 text-sm bg-btc-navy/30 rounded-lg p-1">
-              {(['24h', '7d', '30d', '1y'] as const).map(tf => (
-                <button 
-                  key={tf}
-                  onClick={() => setTimeframe(tf)}
-                  className={`px-3 py-1 rounded-md transition-colors ${
-                    timeframe === tf 
-                      ? 'bg-btc-navy text-white' 
-                      : 'text-gray-400 hover:bg-btc-navy/50'
-                  }`}
-                >
-                  {tf}
-                </button>
-              ))}
+            <div className="w-full sm:w-48">
+              <Select
+                value={timeframe}
+                onValueChange={(value) => setTimeframe(value as '24h' | '7d' | '30d' | '1y')}
+              >
+                <SelectTrigger className="w-full bg-btc-navy/30 border-btc-navy">
+                  <div className="flex items-center gap-2">
+                    <Clock className="h-4 w-4 text-btc-gold" />
+                    <SelectValue placeholder="Select timeframe" />
+                  </div>
+                </SelectTrigger>
+                <SelectContent>
+                  {timeframeOptions.map(option => (
+                    <SelectItem key={option.value} value={option.value}>
+                      {option.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
           </div>
         </div>
