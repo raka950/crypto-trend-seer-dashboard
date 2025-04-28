@@ -1,6 +1,7 @@
+
 import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { BarChart as BarChartIcon } from 'lucide-react';
+import { BarChartIcon } from 'lucide-react';
 import { 
   BarChart, 
   Bar, 
