@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { ChartLine } from 'lucide-react';
 
 interface PriceChartProps {
   data: Array<{ date: string; price: number }>;
@@ -116,7 +117,10 @@ const PriceChart: React.FC<PriceChartProps> = ({ data, predictedData = [], isLoa
     <Card className="glass-card h-full">
       <CardHeader className="pb-2">
         <div className="flex justify-between items-center">
-          <CardTitle>Historical Price</CardTitle>
+          <CardTitle className="flex items-center gap-2">
+            <ChartLine className="h-5 w-5 text-btc-gold" />
+            Real-time Price Prediction
+          </CardTitle>
           <div className="flex space-x-1 text-sm">
             {(['24h', '7d', '30d', '1y'] as const).map(tf => (
               <button 
@@ -189,7 +193,6 @@ const PriceChart: React.FC<PriceChartProps> = ({ data, predictedData = [], isLoa
                   dataKey="predictedPrice" 
                   stroke="#00D0B0" 
                   strokeWidth={2}
-                  strokeDasharray="5 5"
                   dot={false}
                   activeDot={{ r: 6 }}
                   fillOpacity={0.1}
@@ -200,6 +203,18 @@ const PriceChart: React.FC<PriceChartProps> = ({ data, predictedData = [], isLoa
             </LineChart>
           </ResponsiveContainer>
         )}
+        <div className="mt-4 px-2">
+          <div className="flex items-center justify-between text-sm">
+            <div className="flex items-center gap-2">
+              <div className="h-3 w-3 rounded-full bg-[#5469FF]"></div>
+              <span className="text-gray-400">Historical Data</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <div className="h-3 w-3 rounded-full bg-[#00D0B0]"></div>
+              <span className="text-btc-positive">ML Model Prediction</span>
+            </div>
+          </div>
+        </div>
       </CardContent>
     </Card>
   );
